@@ -21,4 +21,4 @@ python bot.py
 ## Start chattings
 Open telegram client, find @ConvaiBot (convai-bot), send "/test PUT_YOUR_BOT_ID_HERE" to start chatting with your own bot
 
->**WARNING:** if you start chatting with command / begin @ConvaiBot will connect your with random bot or human. To evaluate your own bot you should use the command /test with your bot id
+>**WARNING:** if you start chatting with command /begin then @ConvaiBot will connect your with random bot or human. To evaluate your own bot you should use the command /test with your bot id

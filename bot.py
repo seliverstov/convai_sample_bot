@@ -92,7 +92,7 @@ def main():
     if BOT_ID is None:
         raise Exception('You should enter your bot token/id!')
 
-    BOT_URL = os.path.join('https://radiant-dusk-86898.herokuapp.com/', BOT_ID)
+    BOT_URL = os.path.join('https://conavai-test.herokuapp.com/', BOT_ID)
 
     bot = ConvAISampleBot()
 

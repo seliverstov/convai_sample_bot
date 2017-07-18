@@ -1,0 +1,6 @@
+{
+  "name": "convai-sample-bot",
+  "description": "Sample bot for convai.io challenge",
+  "image": "heroku/python",
+  "repository": "https://github.com/seliverstov/convai_sample_bot"
+}

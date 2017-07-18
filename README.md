@@ -1,5 +1,5 @@
 # Sample bot for convai.io challenge
-Bot demonstrates how to use RouterBot API to communicate with telegram users. Currently bot works only with dedicated instance of RouterBot (see BOT_URL) and has fixed id (see BOT_ID). Do not run many instances of bot. Bot support only one dialogue at a time. 
+Bot demonstrates how to use RouterBot API to communicate with telegram users. Bot support only one dialogue at a time and should be used only for testing purpose. Do not run more then one instance of bot.py with same BOT_ID. 
 
 ## Clone repo
 ```sh

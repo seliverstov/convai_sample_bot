@@ -85,12 +85,12 @@ class ConvAISampleBot:
 def main():
 
     """
-    !!!!!!! Put your bot token (id) here !!!!!!!
+    !!!!!!! Put your bot id here !!!!!!!
     """
-    BOT_ID = None
+    BOT_ID = "0000000"
 
     if BOT_ID is None:
-        raise Exception('You should enter your bot token/id!')
+        raise Exception('You should enter your bot id!')
 
     BOT_URL = os.path.join('https://convaibot.herokuapp.com/', BOT_ID)
 

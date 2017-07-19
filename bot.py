@@ -19,6 +19,8 @@ import os
 import json
 import time
 import random
+import getopt
+import sys
 
 
 class ConvAISampleBot:
@@ -82,17 +84,31 @@ class ConvAISampleBot:
         return message
 
 
-def main():
+def main(argv):
+    USAGE = "bot.py -i <bot id> -u <router bot url>"
+    BOT_ID = None
+    ROUTER_BOT_URL = None
 
-    """
-    !!!!!!! Put your bot id here !!!!!!!
-    """
-    BOT_ID = "0000000"
+    try:
+        opts, args = getopt.getopt(argv,'hi:u:', ['bot_id','router_bot_url'])
+    except getopt.GetoptError:
+        print(USAGE)
+        sys.exit(2)
 
-    if BOT_ID is None:
-        raise Exception('You should enter your bot id!')
+    for opt, arg in opts:
+        if opt == '-h':
+            print(USAGE)
+            sys.exit()
+        elif opt == '-i':
+            BOT_ID = arg
+        elif opt == '-u':
+            ROUTER_BOT_URL = arg
 
-    BOT_URL = os.path.join('https://convaibot.herokuapp.com/', BOT_ID)
+    if BOT_ID is None or ROUTER_BOT_URL is None:
+        print(USAGE)
+        sys.exit(2)
+
+    BOT_URL = os.path.join(ROUTER_BOT_URL, BOT_ID)
 
     bot = ConvAISampleBot()
 
@@ -122,4 +138,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])

@@ -31,23 +31,26 @@ class ConvAISampleBot:
         self.bot_id = bot_id
 
     def observe(self, m):
-        if self.chat_id is None and m['message']['text'].startswith('/start '):
-            self.chat_id = m['message']['chat']['id']
-            self.observation = m['message']['text']
-            print("Start new chat #%s" % self.chat_id)
-        elif self.chat_id is not None and m['message']['text'] == '/end':
-            print("End chat #%s" % self.chat_id)
-            self.chat_id = None
-            self.observation = None
-        elif self.chat_id is None:
-            print("Dialog not started yet. Ignore message.")
-            self.observation = None
-        elif m['message']['chat']['id'] == self.chat_id:
-            print("Accept message as part of chat #%s" % self.chat_id)
-            self.observation = m['message']['text']
+        if self.chat_id is None:
+            if m['message']['text'].startswith('/start '):
+                self.chat_id = m['message']['chat']['id']
+                self.observation = m['message']['text']
+                print("Start new chat #%s" % self.chat_id)
+            else:
+                self.observation = None
+                print("Multiple chats are not allowed. Ignore message")
         else:
-            print("Multiple dialogues are not allowed. Ignore message.")
-            self.observation = None
+            if self.chat_id == m['message']['chat']['id']:
+                if m['message']['text'] == '/end':
+                    self.chat_id = None
+                    self.observation = None
+                    print("End chat #%s" % self.chat_id)
+                else:
+                    self.observation = m['message']['text']
+                    print("Accept message as part of chat #%s" % self.chat_id)
+            else:
+                self.observation = None
+                print("Multiple dialogs are not allowed. Ignore message.")
         return self.observation
 
     def act(self):
@@ -56,7 +59,7 @@ class ConvAISampleBot:
             return
 
         if self.observation is None:
-            print("No new messages for chat %s. Do not act." % self.chat_id)
+            print("No new messages for chat #%s. Do not act." % self.chat_id)
             return
 
         message = {
@@ -72,7 +75,7 @@ class ConvAISampleBot:
             'Hello',
             "This is not very interesting. Let's change the subject of the conversation. For example, let's talk about cats. What do you think?",
             '/end']
-        text = "%s : %s" % (self.bot_id[0:7], texts[random.randint(0, 7)])
+        text = texts[random.randint(0, 7)]
 
         data = {}
         if text == '':
@@ -90,7 +93,7 @@ class ConvAISampleBot:
         else:
             print("Decided to respond with text: %s" % text)
             data = {
-                'text': text,
+                'text': "%s : %s" % (self.bot_id[0:7], text),
                 'evaluation': 0
             }
 
@@ -128,6 +131,7 @@ def main(argv):
 
     while True:
         try:
+            time.sleep(1)
             print("Get updates from server")
             res = requests.get(os.path.join(BOT_URL, 'getUpdates'))
 
@@ -149,7 +153,6 @@ def main(argv):
                         print(res.text)
                         res.raise_for_status()
             print("Sleep for 1 sec. before new try")
-            time.sleep(1)
         except Exception as e:
             print("Exception: {}".format(e))
 

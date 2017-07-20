@@ -25,9 +25,10 @@ import sys
 
 class ConvAISampleBot:
 
-    def __init__(self):
+    def __init__(self, bot_id):
         self.chat_id = None
         self.observation = None
+        self.bot_id = bot_id
 
     def observe(self, m):
         if self.chat_id is None and m['message']['text'].startswith('/start '):
@@ -66,7 +67,7 @@ class ConvAISampleBot:
             'Hello',
             "This is not very interesting. Let's change the subject of the conversation. For example, let's talk about cats. What do you think?",
             '/end']
-        text = texts[random.randint(0, 7)]
+        text = "%s : %s" % (self.bot_id[0:7], texts[random.randint(0, 7)])
 
         data = {}
         if text == '':
@@ -118,7 +119,7 @@ def main(argv):
 
     BOT_URL = os.path.join(ROUTER_BOT_URL, BOT_ID)
 
-    bot = ConvAISampleBot()
+    bot = ConvAISampleBot(BOT_ID)
 
     while True:
         try:

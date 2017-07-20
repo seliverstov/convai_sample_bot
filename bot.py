@@ -33,25 +33,30 @@ class ConvAISampleBot:
     def observe(self, m):
         if self.chat_id is None and m['message']['text'].startswith('/start '):
             self.chat_id = m['message']['chat']['id']
+            self.observation = m['message']['text']
             print("Start new chat #%s" % self.chat_id)
         elif self.chat_id is not None and m['message']['text'] == '/end':
             print("End chat #%s" % self.chat_id)
             self.chat_id = None
             self.observation = None
-            return
-
-        if self.chat_id is None:
+        elif self.chat_id is None:
             print("Dialog not started yet. Ignore message.")
+            self.observation = None
         elif m['message']['chat']['id'] == self.chat_id:
             print("Accept message as part of chat #%s" % self.chat_id)
             self.observation = m['message']['text']
-            return self.observation
         else:
             print("Multiple dialogues are not allowed. Ignore message.")
+            self.observation = None
+        return self.observation
 
     def act(self):
         if self.chat_id is None:
             print("Dialog not started yet. Do not act.")
+            return
+
+        if self.observation is None:
+            print("No new messages for chat %s. Do not act." % self.chat_id)
             return
 
         message = {

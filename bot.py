@@ -57,7 +57,17 @@ class ConvAISampleBot:
             'chat_id': self.chat_id
         }
 
-        texts = ['I love you!', 'Wow!', 'Really?', 'Nice!', 'Hi', 'Hello', '', '/end']
+        texts = [
+            'I love you!',
+            'Wow!',
+            'Really?',
+            'Nice!',
+            'Hi',
+            'Hello',
+            "This is not very interesting. Let's change the subject of the conversation. For example, let's talk about cats. What do you think?",
+            "Vladimir Vladimirovich Putin was born on 7 October 1952 in Leningrad, Russian SFSR, Soviet Union (now Saint Petersburg),[19][20] the youngest of three children of Vladimir Spiridonovich Putin (1911–1999) and Maria Ivanovna Putina (née Shelomova; 1911–1998). His birth was preceded by the death of two brothers, Viktor and Albert, born in the mid-1930s. Albert died in infancy and Viktor died of diphtheria during the Siege of Leningrad in World War II.[21] Putin's mother was a factory worker and his father was a conscript in the Soviet Navy, serving in the submarine fleet in the early 1930s. Early in World War II, his father served in the destruction battalion of the NKVD.[22][23][24] Later, he was transferred to the regular army and was severely wounded in 1942.[25] Putin's maternal grandmother was killed by the German occupiers of Tver region in 1941, and his maternal uncles disappeared at the war front.[26]",
+            '',
+            '/end']
         text = texts[random.randint(0, 7)]
 
         data = {}

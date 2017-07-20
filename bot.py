@@ -65,9 +65,8 @@ class ConvAISampleBot:
             'Hi',
             'Hello',
             "This is not very interesting. Let's change the subject of the conversation. For example, let's talk about cats. What do you think?",
-            '',
             '/end']
-        text = texts[random.randint(0, 8)]
+        text = texts[random.randint(0, 7)]
 
         data = {}
         if text == '':

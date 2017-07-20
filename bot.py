@@ -113,28 +113,31 @@ def main(argv):
     bot = ConvAISampleBot()
 
     while True:
-        print("Get updates from server")
-        res = requests.get(os.path.join(BOT_URL, 'getUpdates'))
+        try:
+            print("Get updates from server")
+            res = requests.get(os.path.join(BOT_URL, 'getUpdates'))
 
-        if res.status_code != 200:
-            print(res.text)
-            res.raise_for_status()
+            if res.status_code != 200:
+                print(res.text)
+                res.raise_for_status()
 
-        print("Got %s new messages" % len(res.json()))
-        for m in res.json():
-            print("Process message %s" % m)
-            bot.observe(m)
-            new_message = bot.act()
-            if new_message is not None:
-                print("Send response to server.")
-                res = requests.post(os.path.join(BOT_URL, 'sendMessage'),
-                                    json=new_message,
-                                    headers={'Content-Type': 'application/json'})
-                if res.status_code != 200:
-                    print(res.text)
-                    res.raise_for_status()
-        print("Sleep for 1 sec. before new try")
-        time.sleep(1)
+            print("Got %s new messages" % len(res.json()))
+            for m in res.json():
+                print("Process message %s" % m)
+                bot.observe(m)
+                new_message = bot.act()
+                if new_message is not None:
+                    print("Send response to server.")
+                    res = requests.post(os.path.join(BOT_URL, 'sendMessage'),
+                                        json=new_message,
+                                        headers={'Content-Type': 'application/json'})
+                    if res.status_code != 200:
+                        print(res.text)
+                        res.raise_for_status()
+            print("Sleep for 1 sec. before new try")
+            time.sleep(1)
+        except Exception as e:
+            print("Exception: {}".format(e))
 
 
 if __name__ == '__main__':
